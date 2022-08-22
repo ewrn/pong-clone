@@ -1,5 +1,5 @@
 import pygame, sys, random
-import pong_ball
+import pong_ball, pong_paddle
 
 def draw_paddle_1(paddle_1_x, paddle_1_y):
     paddle_rect_1.midleft = (paddle_1_x, paddle_1_y)
@@ -57,16 +57,11 @@ if __name__ == '__main__':
 
     # Paddle
     paddle_surface = pygame.image.load('assets/paddle.png').convert()
+    paddle1 = pong_paddle.Paddle(0, 325, 0)
+    paddle2 = pong_paddle.Paddle(900, 325, 0)
 
-    paddle_1_x = 0
-    paddle_1_y = 325
-    paddle_rect_1 = paddle_surface.get_rect(midleft=(paddle_1_x, paddle_1_y))
-    paddle_1_movement = 0
-
-    paddle_2_x = 900
-    paddle_2_y = 325
-    paddle_rect_2 = paddle_surface.get_rect(midright=(paddle_2_x, paddle_2_y))
-    paddle_2_movement = 0
+    paddle_rect_1 = paddle_surface.get_rect(midleft=(paddle1.x, paddle1.y))
+    paddle_rect_2 = paddle_surface.get_rect(midright=(paddle2.x, paddle2.y))
 
     # Score
     player_1_score = 0
@@ -91,18 +86,18 @@ if __name__ == '__main__':
                     ball.y_movement = generate_movement_speed()
                     game_running = True
                 if event.key == pygame.K_w:
-                    paddle_1_movement = -10
+                    paddle1.movement = -10
                 if event.key == pygame.K_s:
-                    paddle_1_movement = 10
+                    paddle1.movement = 10
                 if event.key == pygame.K_UP:
-                    paddle_2_movement = -10
+                    paddle2.movement = -10
                 if event.key == pygame.K_DOWN:
-                    paddle_2_movement = 10
+                    paddle2.movement = 10
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_w or event.key == pygame.K_s:
-                    paddle_1_movement = 0
+                    paddle1.movement = 0
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                    paddle_2_movement = 0
+                    paddle2.movement = 0
 
         # Background
         screen.blit(background_surface, (0, 0))
@@ -119,26 +114,26 @@ if __name__ == '__main__':
             draw_ball(ball.x, ball.y)
 
             # Player 1 Paddle
-            paddle_1_y += paddle_1_movement
+            paddle1.y += paddle1.movement
 
             # Paddle Boundary
-            if paddle_1_y >= 580:
-                paddle_1_y = 580
-            elif paddle_1_y <= 70:
-                paddle_1_y = 70
+            if paddle1.y >= 580:
+                paddle1.y = 580
+            elif paddle1.y <= 70:
+                paddle1.y = 70
 
-            draw_paddle_1(paddle_1_x, paddle_1_y)
+            draw_paddle_1(paddle1.x, paddle1.y)
 
             # Player 2 Paddle
-            paddle_2_y += paddle_2_movement
+            paddle2.y += paddle2.movement
 
             # Paddle Boundary
-            if paddle_2_y >= 580:
-                paddle_2_y = 580
-            elif paddle_2_y <= 70:
-                paddle_2_y = 70
+            if paddle2.y >= 580:
+                paddle2.y = 580
+            elif paddle2.y <= 70:
+                paddle2.y = 70
 
-            draw_paddle_2(paddle_2_x, paddle_2_y)
+            draw_paddle_2(paddle2.x, paddle2.y)
 
             # Collision
             if check_collision(paddle_rect_1, paddle_rect_2, ball_rect):
@@ -163,22 +158,22 @@ if __name__ == '__main__':
             # draw starting position
             draw_ball(ball.x, ball.y)
 
-            paddle_1_y += paddle_1_movement
-            paddle_2_y += paddle_2_movement
+            paddle1.y += paddle1.movement
+            paddle2.y += paddle2.movement
 
             # Paddle Boundary
-            if paddle_1_y >= 580:
-                paddle_1_y = 580
-            elif paddle_1_y <= 70:
-                paddle_1_y = 70
+            if paddle1.y >= 580:
+                paddle1.y = 580
+            elif paddle1.y <= 70:
+                paddle1.y = 70
 
-            if paddle_2_y >= 580:
-                paddle_2_y = 580
-            elif paddle_2_y <= 70:
-                paddle_2_y = 70
+            if paddle2.y >= 580:
+                paddle2.y = 580
+            elif paddle2.y <= 70:
+                paddle2.y = 70
 
-            draw_paddle_1(paddle_1_x, paddle_1_y)
-            draw_paddle_2(paddle_2_x, paddle_2_y)
+            draw_paddle_1(paddle1.x, paddle1.y)
+            draw_paddle_2(paddle2.x, paddle2.y)
 
             # Instruction
             # Only show instruction when game is not active

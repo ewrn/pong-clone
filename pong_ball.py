@@ -9,7 +9,7 @@ class Ball():
         self.x = x
         self.y = y
         self.x_movement = x_movement
-        self.y_movement = y_movement 
+        self.y_movement = y_movement
 
     # def set_x(value):
     #     self.x = value
