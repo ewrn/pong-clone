@@ -1,5 +1,5 @@
 import pygame, sys, random
-
+import pong_ball
 
 def draw_paddle_1(paddle_1_x, paddle_1_y):
     paddle_rect_1.midleft = (paddle_1_x, paddle_1_y)
@@ -52,12 +52,8 @@ if __name__ == '__main__':
 
     # Ball
     ball_surface = pygame.image.load('assets/ball.png').convert_alpha()
-
-    ball_x = 450
-    ball_y = 325
-    ball_rect = ball_surface.get_rect(center=(ball_x, ball_y))
-    ball_x_movement = 0 # ball movement speed
-    ball_y_movement = 0
+    ball = pong_ball.Ball(450, 325, 0, 0)
+    ball_rect = ball_surface.get_rect(center=(ball.x, ball.y))
 
     # Paddle
     paddle_surface = pygame.image.load('assets/paddle.png').convert()
@@ -91,8 +87,8 @@ if __name__ == '__main__':
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and game_running is False: # User press space to start the game
-                    ball_x_movement = generate_movement_speed()
-                    ball_y_movement = generate_movement_speed()
+                    ball.x_movement = generate_movement_speed()
+                    ball.y_movement = generate_movement_speed()
                     game_running = True
                 if event.key == pygame.K_w:
                     paddle_1_movement = -10
@@ -115,12 +111,12 @@ if __name__ == '__main__':
             # Ball
             if ball_hit_boundary(ball_rect):
                 # if ball hit boundary, bounce back
-                ball_y_movement *= -1
+                ball.y_movement *= -1
                 collide_sound.play()
 
-            ball_x += ball_x_movement
-            ball_y += ball_y_movement
-            draw_ball(ball_x, ball_y)
+            ball.x += ball.x_movement
+            ball.y += ball.y_movement
+            draw_ball(ball.x, ball.y)
 
             # Player 1 Paddle
             paddle_1_y += paddle_1_movement
@@ -146,7 +142,7 @@ if __name__ == '__main__':
 
             # Collision
             if check_collision(paddle_rect_1, paddle_rect_2, ball_rect):
-                ball_x_movement *= -1
+                ball.x_movement *= -1
                 collide_sound.play()
 
             # Ball goes out of bounds
@@ -155,17 +151,17 @@ if __name__ == '__main__':
                 player_1_score += 1
                 game_running = False
                 # reset ball's position
-                ball_x = 450
-                ball_y = 325
+                ball.x = 450
+                ball.y = 325
             elif winner == 2:
                 player_2_score += 1
                 game_running = False
-                ball_x = 450
-                ball_y = 325
+                ball.x = 450
+                ball.y = 325
 
         elif game_running is False:
             # draw starting position
-            draw_ball(ball_x, ball_y)
+            draw_ball(ball.x, ball.y)
 
             paddle_1_y += paddle_1_movement
             paddle_2_y += paddle_2_movement
