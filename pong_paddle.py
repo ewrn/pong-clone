@@ -9,4 +9,3 @@ class Paddle():
         self.y = y
         self.movement = movement
     
-    
