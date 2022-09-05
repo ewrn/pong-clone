@@ -85,24 +85,12 @@ while True:
 
         # draw the left paddle moving
         paddle1.y += paddle1.movement
-
-        # if left paddle hit boundary, stop it from going over
-        if paddle1.y >= 580:
-            paddle1.y = 580
-        elif paddle1.y <= 70:
-            paddle1.y = 70
-
+        util.stop_paddle_out_of_bound(paddle1) # stops left paddle from going over boundary
         util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
 
         # draw the right paddle moving
         paddle2.y += paddle2.movement
-
-        # if right paddle hit boundary, stop it from going over
-        if paddle2.y >= 580:
-            paddle2.y = 580
-        elif paddle2.y <= 70:
-            paddle2.y = 70
-
+        util.stop_paddle_out_of_bound(paddle2) # stops right paddle from going over boundary
         util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
         # if ball hit paddle, bounce back from paddle
@@ -127,24 +115,12 @@ while True:
 
         # draw the left paddle moving
         paddle1.y += paddle1.movement
-
-        # if left paddle hit boundary, stop it from going over
-        if paddle1.y >= 580:
-            paddle1.y = 580
-        elif paddle1.y <= 70:
-            paddle1.y = 70
-
+        util.stop_paddle_out_of_bound(paddle1) # stops left paddle from going over boundary
         util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
 
         # draw the right paddle moving
         paddle2.y += paddle2.movement
-
-        # if right paddle hit boundary, stop it from going over
-        if paddle2.y >= 580:
-            paddle2.y = 580
-        elif paddle2.y <= 70:
-            paddle2.y = 70
-        
+        util.stop_paddle_out_of_bound(paddle2) # stops right paddle from going over boundary
         util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
         # only show instruction when game is not active

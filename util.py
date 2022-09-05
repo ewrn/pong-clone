@@ -31,3 +31,9 @@ def check_out_of_bound(ball_rect):
         return 1 # Player 1 wins
     else:
         return 0
+
+def stop_paddle_out_of_bound(paddle):
+    if paddle.y >= 580:
+        paddle.y = 580
+    elif paddle.y <= 70:
+        paddle.y = 70
