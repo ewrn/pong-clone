@@ -124,14 +124,10 @@ while True:
         util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
         # only show instruction when game is not active
-        instruction_surface = instruction_font.render(f'Press Space to Start!', True, (255, 255, 255))
-        instruction_rect = instruction_surface.get_rect(center=(450, 500))
-        screen.blit(instruction_surface, instruction_rect)
+        util.show_instructions(screen, instruction_font)
 
     # show score at all times
-    score_surface = score_font.render(f'{player_1_score}     SCORE     {player_2_score}', True, (255, 255, 255))
-    score_rect = score_surface.get_rect(center=(450, 100))
-    screen.blit(score_surface, score_rect)
+    util.show_scores(screen, score_font, player_1_score, player_2_score)
 
     pygame.display.update()
     clock.tick(120) # to control fps

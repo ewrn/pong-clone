@@ -1,6 +1,6 @@
 import random
 
-def draw_ball(screen, ball_rect, ball_surface, ball_x, ball_y, ):
+def draw_ball(screen, ball_rect, ball_surface, ball_x, ball_y):
     ball_rect.center = (ball_x, ball_y)
     screen.blit(ball_surface, ball_rect)
 
@@ -37,3 +37,13 @@ def stop_paddle_out_of_bound(paddle):
         paddle.y = 580
     elif paddle.y <= 70:
         paddle.y = 70
+
+def show_instructions(screen, instruction_font):
+    instruction_surface = instruction_font.render(f'Press Space to Start!', True, (255, 255, 255))
+    instruction_rect = instruction_surface.get_rect(center=(450, 500))
+    screen.blit(instruction_surface, instruction_rect)
+
+def show_scores(screen, score_font, player_1_score, player_2_score):
+    score_surface = score_font.render(f'{player_1_score}     SCORE     {player_2_score}', True, (255, 255, 255))
+    score_rect = score_surface.get_rect(center=(450, 100))
+    screen.blit(score_surface, score_rect)
