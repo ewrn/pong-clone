@@ -69,24 +69,24 @@ while True:
                 # User release up or down arrow key
                 paddle2.movement = 0
 
-    # Background
+    # draw background
     screen.blit(background_surface, (0, 0))
 
     if game_running:
-        # Ball
+        # if ball hit boundary, bounce back from the wall
         if util.ball_hit_boundary(ball_rect):
-            # if ball hit boundary, bounce back
             ball.y_movement *= -1
             collide_sound.play()
 
+        # draw the ball moving
         ball.x += ball.x_movement
         ball.y += ball.y_movement
         util.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
 
-        # Player 1 Paddle
+        # draw the left paddle moving
         paddle1.y += paddle1.movement
 
-        # Paddle Boundary
+        # if left paddle hit boundary, stop it from going over
         if paddle1.y >= 580:
             paddle1.y = 580
         elif paddle1.y <= 70:
@@ -94,10 +94,10 @@ while True:
 
         util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
 
-        # Player 2 Paddle
+        # draw the right paddle moving
         paddle2.y += paddle2.movement
 
-        # Paddle Boundary
+        # if right paddle hit boundary, stop it from going over
         if paddle2.y >= 580:
             paddle2.y = 580
         elif paddle2.y <= 70:
@@ -105,12 +105,12 @@ while True:
 
         util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
-        # Collision
+        # if ball hit paddle, bounce back from paddle
         if util.check_collision(paddle_rect_1, paddle_rect_2, ball_rect):
             ball.x_movement *= -1
             collide_sound.play()
 
-        # Ball goes out of bounds
+        # if ball goes out of bounds, add score
         winner = util.check_out_of_bound(ball_rect)
         if winner == 1:
             player_1_score += 1
@@ -125,30 +125,34 @@ while True:
         # draw starting position
         util.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
 
+        # draw the left paddle moving
         paddle1.y += paddle1.movement
-        paddle2.y += paddle2.movement
 
-        # Paddle Boundary
+        # if left paddle hit boundary, stop it from going over
         if paddle1.y >= 580:
             paddle1.y = 580
         elif paddle1.y <= 70:
             paddle1.y = 70
 
+        util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
+
+        # draw the right paddle moving
+        paddle2.y += paddle2.movement
+
+        # if right paddle hit boundary, stop it from going over
         if paddle2.y >= 580:
             paddle2.y = 580
         elif paddle2.y <= 70:
             paddle2.y = 70
-
-        util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
+        
         util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
-        # Instruction
-        # Only show instruction when game is not active
+        # only show instruction when game is not active
         instruction_surface = instruction_font.render(f'Press Space to Start!', True, (255, 255, 255))
         instruction_rect = instruction_surface.get_rect(center=(450, 500))
         screen.blit(instruction_surface, instruction_rect)
 
-    # Score
+    # show score at all times
     score_surface = score_font.render(f'{player_1_score}     SCORE     {player_2_score}', True, (255, 255, 255))
     score_rect = score_surface.get_rect(center=(450, 100))
     screen.blit(score_surface, score_rect)
