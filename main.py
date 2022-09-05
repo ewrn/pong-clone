@@ -1,6 +1,5 @@
 import pygame, sys
-import util
-import pong_ball, pong_paddle
+import util, pong_ball, pong_paddle
 
 # Game Variables
 pygame.init() # initialize pygame
@@ -18,10 +17,13 @@ ball_rect = ball_surface.get_rect(center=(ball.x, ball.y))
 
 # Paddle
 paddle_surface = pygame.image.load('assets/paddle.png').convert()
-paddle1 = pong_paddle.Paddle(0, 325, 0)
-paddle2 = pong_paddle.Paddle(900, 325, 0)
 
+# Left Paddle
+paddle1 = pong_paddle.Paddle(0, 325, 0)
 paddle_rect_1 = paddle_surface.get_rect(midleft=(paddle1.x, paddle1.y))
+
+# Right Paddle
+paddle2 = pong_paddle.Paddle(900, 325, 0)
 paddle_rect_2 = paddle_surface.get_rect(midright=(paddle2.x, paddle2.y))
 
 # Score
@@ -74,7 +76,7 @@ while True:
 
     if game_running:
         # if ball hit boundary, bounce back from the wall
-        if util.ball_hit_boundary(ball_rect):
+        if util.check_ball_hit_boundary(ball_rect):
             ball.y_movement *= -1
             collide_sound.play()
 
@@ -94,12 +96,12 @@ while True:
         util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
         # if ball hit paddle, bounce back from paddle
-        if util.check_collision(paddle_rect_1, paddle_rect_2, ball_rect):
+        if util.check_ball_hit_paddle(paddle_rect_1, paddle_rect_2, ball_rect):
             ball.x_movement *= -1
             collide_sound.play()
 
         # if ball goes out of bounds, add score
-        winner = util.check_out_of_bound(ball_rect)
+        winner = util.check_ball_out_of_bound(ball_rect)
         if winner == 1:
             player_1_score += 1
             game_running = False
