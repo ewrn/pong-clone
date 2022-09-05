@@ -9,19 +9,6 @@ class Ball():
         self.x_movement = x_movement
         self.y_movement = y_movement
 
-    def resetBallPosition():
+    def reset_ball_position(self):
         self.x = 450
         self.y = 325
-
-    # def set_x(value):
-    #     self.x = value
-    
-    # def set_y(value):
-    #     self.y = value
-    
-    # def set_x_movement(value):
-    #     self.x_movement = value
-    
-    # def set_y_movement(value):
-    #     self.y_movement = value
-    

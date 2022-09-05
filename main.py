@@ -1,5 +1,6 @@
 import pygame, sys
-import pong_methods, pong_ball, pong_paddle
+import util
+import pong_ball, pong_paddle
 
 # Game Variables
 pygame.init() # initialize pygame
@@ -44,8 +45,8 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and game_running is False:
                 # User press space to start the game
-                ball.x_movement = pong_methods.generate_movement_speed()
-                ball.y_movement = pong_methods.generate_movement_speed()
+                ball.x_movement = util.generate_movement_speed()
+                ball.y_movement = util.generate_movement_speed()
                 game_running = True
             if event.key == pygame.K_w:
                 # User press w key
@@ -73,14 +74,14 @@ while True:
 
     if game_running:
         # Ball
-        if pong_methods.ball_hit_boundary(ball_rect):
+        if util.ball_hit_boundary(ball_rect):
             # if ball hit boundary, bounce back
             ball.y_movement *= -1
             collide_sound.play()
 
         ball.x += ball.x_movement
         ball.y += ball.y_movement
-        pong_methods.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
+        util.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
 
         # Player 1 Paddle
         paddle1.y += paddle1.movement
@@ -91,7 +92,7 @@ while True:
         elif paddle1.y <= 70:
             paddle1.y = 70
 
-        pong_methods.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
+        util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
 
         # Player 2 Paddle
         paddle2.y += paddle2.movement
@@ -102,30 +103,27 @@ while True:
         elif paddle2.y <= 70:
             paddle2.y = 70
 
-        pong_methods.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
+        util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
         # Collision
-        if pong_methods.check_collision(paddle_rect_1, paddle_rect_2, ball_rect):
+        if util.check_collision(paddle_rect_1, paddle_rect_2, ball_rect):
             ball.x_movement *= -1
             collide_sound.play()
 
         # Ball goes out of bounds
-        winner = pong_methods.check_out_of_bound(ball_rect)
+        winner = util.check_out_of_bound(ball_rect)
         if winner == 1:
             player_1_score += 1
             game_running = False
-            # reset ball's position
-            ball.x = 450
-            ball.y = 325
+            ball.reset_ball_position()
         elif winner == 2:
             player_2_score += 1
             game_running = False
-            ball.x = 450
-            ball.y = 325
+            ball.reset_ball_position()
 
     elif game_running is False:
         # draw starting position
-        pong_methods.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
+        util.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
 
         paddle1.y += paddle1.movement
         paddle2.y += paddle2.movement
@@ -141,8 +139,8 @@ while True:
         elif paddle2.y <= 70:
             paddle2.y = 70
 
-        pong_methods.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
-        pong_methods.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
+        util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
+        util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
 
         # Instruction
         # Only show instruction when game is not active
