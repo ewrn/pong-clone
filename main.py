@@ -27,8 +27,8 @@ paddle2 = pong_paddle.Paddle(900, 325, 0)
 paddle_rect_2 = paddle_surface.get_rect(midright=(paddle2.x, paddle2.y))
 
 # Score
-player_1_score = 0
-player_2_score = 0
+player1_score = 0
+player2_score = 0
 score_font = pygame.font.Font('assets/minecraft.ttf', 45)
 
 # Instruction
@@ -83,17 +83,17 @@ while True:
         # draw the ball moving
         ball.x += ball.x_movement
         ball.y += ball.y_movement
-        util.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
+        util.draw_ball(screen, ball_surface, ball_rect, ball.x, ball.y)
 
         # draw the left paddle moving
         paddle1.y += paddle1.movement
         util.stop_paddle_out_of_bound(paddle1) # stops left paddle from going over boundary
-        util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
+        util.draw_paddle(screen, paddle_surface, paddle_rect_1, paddle1.x, paddle1.y, True)
 
         # draw the right paddle moving
         paddle2.y += paddle2.movement
         util.stop_paddle_out_of_bound(paddle2) # stops right paddle from going over boundary
-        util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
+        util.draw_paddle(screen, paddle_surface, paddle_rect_2, paddle2.x, paddle2.y, False)
 
         # if ball hit paddle, bounce back from paddle
         if util.check_ball_hit_paddle(paddle_rect_1, paddle_rect_2, ball_rect):
@@ -103,33 +103,33 @@ while True:
         # if ball goes out of bounds, add score
         winner = util.check_ball_out_of_bound(ball_rect)
         if winner == 1:
-            player_1_score += 1
+            player1_score += 1
             game_running = False
             ball.reset_ball_position()
         elif winner == 2:
-            player_2_score += 1
+            player2_score += 1
             game_running = False
             ball.reset_ball_position()
 
     elif game_running is False:
         # draw starting position
-        util.draw_ball(screen, ball_rect, ball_surface, ball.x, ball.y)
+        util.draw_ball(screen, ball_surface, ball_rect, ball.x, ball.y)
 
         # draw the left paddle moving
         paddle1.y += paddle1.movement
         util.stop_paddle_out_of_bound(paddle1) # stops left paddle from going over boundary
-        util.draw_paddle(screen, paddle_rect_1, paddle_surface, paddle1.x, paddle1.y, True)
+        util.draw_paddle(screen, paddle_surface, paddle_rect_1, paddle1.x, paddle1.y, True)
 
         # draw the right paddle moving
         paddle2.y += paddle2.movement
         util.stop_paddle_out_of_bound(paddle2) # stops right paddle from going over boundary
-        util.draw_paddle(screen, paddle_rect_2, paddle_surface, paddle2.x, paddle2.y, False)
+        util.draw_paddle(screen, paddle_surface, paddle_rect_2, paddle2.x, paddle2.y, False)
 
         # only show instruction when game is not active
         util.show_instructions(screen, instruction_font)
 
     # show score at all times
-    util.show_scores(screen, score_font, player_1_score, player_2_score)
+    util.show_scores(screen, score_font, player1_score, player2_score)
 
     pygame.display.update()
     clock.tick(120) # to control fps
